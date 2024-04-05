@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="manifest" href="./img/site.webmanifest" />
+    <link rel="mask-icon" href="./img/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Weather forecast</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="mainheader">
+        <div class="logo">
+          <img src="img/weatherlogotwo.png" alt="logo" />
+          <h2>Weather Forecast</h2>
+        </div>
+        <div class="headertitle">
+          <div class="menu">
+            <ul>
+              <li>
+                <a href="Home.html"> Home </a>
+              </li>
+              <li>
+                <a href="About.html"> About </a>
+              </li>
+              <li>
+                <a href="weatherForecast.html" class="active"> Forecast </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="weathercontent">
+      <div class="card weathercard">
+        <div class="card-body">
+          <div class="heading">
+            <div>
+              <h3>Current Weather</h3>
+              <div class="time"></div>
+            </div>
+            <div class="cityname"></div>
+          </div>
+          <div class="temparature">
+            <div class="cloudimg">
+              <img src="" alt="no image" class="cloudimage" />
+            </div>
+            <div class="temp">
+              <div class="tempval">24 deg c</div>
+              <div class="weatherdata">Heavy Rain</div>
+            </div>
+          </div>
+          <div class="otherdata">
+            <div class="humunity">
+              <div class="icon">
+                <i class="fas fa-water"></i>
+              </div>
+              <div>
+                <div class="humunitydata"></div>
+                <div>Humidity</div>
+              </div>
+            </div>
+            <div class="descriptionitem">
+              <span>Description</span>
+              <li class="description"></li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card forcastcard">
+        <div class="card-body">
+          <div class="forecasthead">
+            <div>Forecast  (<span class="forcastcityname"></span>)</div>
+            
+            <div class="toggleContainer">
+              5 days
+            </div>
+          </div>
+
+          <div class="forecastcontent">
+            <div class="row">
+              <div class="col-6">
+                <span>icon</span>
+                <span>24deg/26deg</span>
+              </div>
+              <div class="col-6">
+                25 Jul,Thu
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function formatTime(timestamp) {
+        var date = new Date(timestamp * 1000);
+        var formattedTime = date.toLocaleTimeString("en-US", { hour12: true });
+        return formattedTime;
+      }
+      console.log(window.location);
+      const urlParams = new URLSearchParams(window.location.search);
+      console.log(urlParams.get("cityname"));
+      let metric = "metric";
+      let cloudsname = document.querySelector(".cloudimage");
+      let cityname = urlParams.get("cityname");
+      if(cityname === null || cityname===undefined){
+        cityname = "Delhi"
+      }
+      let apiKey = "897920f6577858e1855484cfc27a3410"; 
+      async function weatherinfo(location) {
+        let apiUrl ="https://api.openweathermap.org/data/2.5/weather?q=" +location +"&appid=" + apiKey+"&units=" +metric;
+        const response = await fetch(apiUrl);
+        const weather = await response.json();
+        console.log(weather);
+        let formattedTime = formatTime(weather.dt);
+        document.querySelector(".cityname").innerHTML = cityname.toUpperCase();
+        document.querySelector(".time").innerHTML = formattedTime;
+        document.querySelector(".tempval").innerHTML =
+          Math.round(weather.main.temp) + "°C";
+        document.querySelector(".humunitydata").innerHTML =
+          weather.main.humidity + "%";
+        document.querySelector(".weatherdata").innerHTML =
+          weather.weather[0].main;
+          document.querySelector(".description").innerHTML =
+          weather.weather[0].description;
+          
+          if(weather.weather[0].main === "Clouds"){
+            cloudsname.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png"
+          }else if(weather.weather[0].main === "Clear"){
+            cloudsname.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png"
+          }else if(weather.weather[0].main === "Clear"){
+            cloudsname.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png"
+          }else if(weather.weather[0].main === "Rain"){
+            cloudsname.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png"
+          }else if(weather.weather[0].main === "Drizzle"){
+            cloudsname.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png"
+          }else if(weather.weather[0].main === "Mist"){
+            cloudsname.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png"
+          }else{
+            cloudsname.src = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png"
+          }
+           
+          
+      }
+      async function logtwoMovies(location) {
+        let apiUrl ="http://api.openweathermap.org/data/2.5/forecast?q=" +location +"&appid=" + apiKey+"&units=" +metric;
+        const response = await fetch(apiUrl);
+        const forecastdata = await response.json();
+        console.log("cityname ==========");
+        console.log(forecastdata);
+        document.querySelector(".forcastcityname").innerHTML = forecastdata.city.name.toUpperCase();
+        console.log("cityname ====");
+        let forecastArr = forecastdata.list;
+        console.log(forecastArr);
+        let forecastHtml = "";
+        forecastArr.forEach(forecast => {
+        const forecastDate = new Date(forecast.dt * 1000); 
+        const iconUrl = "http://openweathermap.org/img/wn/" + forecast.weather[0].icon + ".png";
+        forecastHtml += `
+            <div class="row">
+                <div class="col-6">
+                    <span><img src="${iconUrl}" alt="Weather Icon"></span>
+                    <span>${Math.round(forecast.main.temp_min)}°C/${Math.round(forecast.main.temp_max)}°C</span>
+                </div>
+                <div class="col-6">
+                    ${forecastDate.toLocaleDateString("en-US", { weekday: 'short', month: 'short', day: 'numeric' })}
+                </div>
+            </div>`;
+        });
+        document.querySelector(".forecastcontent").innerHTML = forecastHtml;
+
+      }
+      logtwoMovies(cityname);
+      weatherinfo(cityname);
+    </script>
+
+  </body>
+</html>

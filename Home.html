@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="manifest" href="./img/site.webmanifest" />
+    <link rel="mask-icon" href="./img/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Weather forecast</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      input {
+        appearance: none;
+        border-radius: 0;
+      }
+
+      .card {
+        margin: 2rem auto;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 425px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px 0 rgba(#999, 0.25);
+        padding: 0.75rem;
+      }
+
+      .card-image {
+        border-radius: 8px;
+        overflow: hidden;
+        padding-bottom: 65%;
+        background-image: url("./img/clouds.jpg");
+        background-repeat: no-repeat;
+        background-size: 150%;
+        background-position: 0 5%;
+        position: relative;
+      }
+      .card-image::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #464545;
+        opacity: 0.5;
+        z-index: 0;
+      }
+
+      .card-heading {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: white;
+        line-height: 1.222;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        text-align: center;
+        z-index: 2;
+        text-transform: uppercase;
+        border-bottom: double;
+        padding-bottom: 10px;
+        small {
+          display: block;
+          font-size: 0.75em;
+          font-weight: 400;
+          margin-top: 0.25em;
+        }
+      }
+
+      .card-form {
+        padding: 2rem 1rem 0;
+      }
+
+      .input {
+        display: flex;
+        flex-direction: column-reverse;
+        position: relative;
+        padding-top: 1.5rem;
+        & + .input {
+          margin-top: 1.5rem;
+        }
+      }
+
+      .input-label {
+        color: #8597a3;
+        position: absolute;
+        top: 1.5rem;
+        transition: 0.25s ease;
+      }
+
+      .input-field {
+        border: 0;
+        z-index: 1;
+        background-color: transparent;
+        border-bottom: 2px solid #eee;
+        font: inherit;
+        font-size: 1.125rem;
+        padding: 0.25rem 0;
+        &:focus,
+        &:valid {
+          outline: 0;
+          border-bottom-color: #6658d3;
+          & + .input-label {
+            color: #6658d3;
+            transform: translateY(-1.5rem);
+          }
+        }
+      }
+
+      .action {
+        margin-top: 2rem;
+      }
+
+      .action-button {
+        font: inherit;
+        font-size: 1.25rem;
+        padding: 1em;
+        width: 100%;
+        font-weight: 500;
+        background-color: #6658d3;
+        border-radius: 6px;
+        color: #fff;
+        border: 0;
+        &:focus {
+          outline: 0;
+        }
+      }
+
+      .card-info {
+        padding: 1rem 1rem;
+        text-align: center;
+        font-size: 0.875rem;
+        color: #8597a3;
+        a {
+          display: block;
+          color: #6658d3;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="mainheader">
+        <div class="logo">
+          <img src="img/weatherlogotwo.png" alt="logo" />
+          <h2>Weather Forecast</h2>
+        </div>
+        <div class="headertitle">
+          <div class="menu">
+            <ul>
+              <li>
+                <a href="Home.html" class="active"> Home </a>
+              </li>
+              <li>
+                <a href="About.html"> About </a>
+              </li>
+              <li>
+                <a href="weatherForecast.html"> Forecast </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="container">
+        <!-- code here -->
+        <div class="card">
+          <div class="card-image">
+            <h2 class="card-heading">Weather Forecast</h2>
+          </div>
+          <form class="card-form" method="get" action="/weatherForecast.html">
+            <div class="input">
+              <input
+                type="text"
+                class="input-field"
+                id="cityname"
+                name="cityname"
+                value=""
+                required
+              />
+              <label class="input-label">Search By City Name</label>
+            </div>
+            <div class="action">
+              <button type="submit" class="action-button">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("cityname").value = "";
+    </script>
+  </body>
+</html>
